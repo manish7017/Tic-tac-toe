@@ -41,7 +41,7 @@ function Board({ xIsNext, squares, onPlay }) {
       squaresInRow.push(renderSquare(row * 3 + col));
     }
     boardRows.push(
-      <div key={row} className="board-row">
+      <div key={row} className="board-row snap-center">
         {squaresInRow}
       </div>
     );
@@ -69,6 +69,11 @@ export default function Game() {
 
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
+  }
+
+  function restartGame() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
   }
 
   const moves = history.map((squares, move) => {
@@ -100,6 +105,11 @@ export default function Game() {
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
+        <div>
+          <button onClick={restartGame} className="button">
+            Restart Game
+          </button>
+        </div>
         <ol>{moves}</ol>
       </div>
     </div>
